@@ -36,7 +36,7 @@ pipeline {
     stage('Deploy') {
      steps{
         script {
-			sh 'cat /var/lib/jenkins/script.sh | bash'
+			sh  'cat /var/lib/jenkins/script.sh | bash'
                 }
         }
       } 
