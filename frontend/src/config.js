@@ -1,2 +1,2 @@
-export const API_URL = 'http://localhost:8080/'
+export const API_URL = 'http://backend-challenge.ctrl.school'
 export default API_URL
