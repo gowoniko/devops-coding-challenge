@@ -1,12 +1,11 @@
-FROM node:14-alpine AS deps
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+FROM node:16-alpine
+WORKDIR app/
 
-# Install app dependencies
-COPY package.json /usr/src/app/
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
-# Bundle app source
-COPY . /usr/src/app
+
+COPY . ./
 RUN npm run build
 ENV NODE_ENV production
 
