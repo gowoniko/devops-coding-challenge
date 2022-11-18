@@ -11,11 +11,11 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] 
+  owners = ["099720109477"]
 }
 
 resource "aws_network_interface" "jenkins_network_id" {
-  subnet_id   = var.subnet_ids[0]
+  subnet_id = var.subnet_ids[0]
 
   tags = {
     Name = "primary_network_interface"
@@ -25,10 +25,10 @@ resource "aws_network_interface" "jenkins_network_id" {
 resource "aws_instance" "jenkins" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.medium"
-  key_name = "devops-challenge"
+  key_name      = "devops-challenge"
 
   tags = {
-    Name = "Jenkins"
+    Name        = "Jenkins"
     Environment = "dev"
   }
 }

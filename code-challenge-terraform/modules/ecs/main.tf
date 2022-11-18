@@ -61,7 +61,7 @@ module "frontend_sg" {
   source       = "../security_group"
   vpc_id       = var.vpc_id
   service_name = "${var.env}-frontend"
-  rules = var.frontend_rule
+  rules        = var.frontend_rule
 
 }
 
@@ -73,21 +73,21 @@ module "dev_frontend_webapp" {
   subnet_ids     = var.subnet_ids
   container_port = 3000
   #lb and tg configurations
-  tg_unhealthy_threshold     = 2
-  listener_arn               = var.load_balancer["listener_arn"]
+  listener_arn = var.load_balancer["listener_arn"]
   #container and service configurations
-  ecs_cluster        = aws_ecs_cluster.cluster1.name
-  task_role_arn      = aws_iam_role.ecs_tasks_execution_role.arn
-  security_groups    = [module.frontend_sg.id]
-  alb_arn_suffix     = var.load_balancer["lb_arn_suffix"]
-  tg_port            = 3000
+  ecs_cluster     = aws_ecs_cluster.cluster1.name
+  task_role_arn   = aws_iam_role.ecs_tasks_execution_role.arn
+  security_groups = [module.frontend_sg.id]
+  alb_arn_suffix  = var.load_balancer["lb_arn_suffix"]
+  fqdn            = "frontend-challenge.ctrl.school"
+  tg_port         = 3000
   container_definitions = {
     dev-frontend = {
       image       = "${var.repositories["devops-challenge-frontend"]}:frontend"
       command     = []
       environment = []
       secret      = null
-      port = 3000
+      port        = 3000
     }
   }
 }
@@ -97,7 +97,7 @@ module "backend_sg" {
   source       = "../security_group"
   vpc_id       = var.vpc_id
   service_name = "${var.env}-backend"
-  rules = var.backend_rule
+  rules        = var.backend_rule
 
 }
 
@@ -109,25 +109,25 @@ module "dev_backend_webapp" {
   subnet_ids     = var.subnet_ids
   container_port = 8080
   #lb and tg configurations
-  tg_unhealthy_threshold     = 2
-  listener_arn               = var.load_balancer["listener_arn"]
+  listener_arn = var.load_balancer["listener_arn"]
   #container and service configurations
-  ecs_cluster        = aws_ecs_cluster.cluster1.name
-  task_role_arn      = aws_iam_role.ecs_tasks_execution_role.arn
-  security_groups    = [module.backend_sg.id]
-  alb_arn_suffix     = var.load_balancer["lb_arn_suffix"]
-  tg_port            = 8080
+  ecs_cluster     = aws_ecs_cluster.cluster1.name
+  task_role_arn   = aws_iam_role.ecs_tasks_execution_role.arn
+  security_groups = [module.backend_sg.id]
+  alb_arn_suffix  = var.load_balancer["lb_arn_suffix"]
+  fqdn            = "backend-challenge.ctrl.school"
+  tg_port         = 8080
   container_definitions = {
     dev-backend = {
       image       = "${var.repositories["devops-challenge-backend"]}:backend"
       command     = []
       environment = []
       secret      = null
-      port = 8080
+      port        = 8080
     }
   }
 }
 
 output "task_arn" {
-  value  =  aws_iam_role.ecs_tasks_execution_role.arn
+  value = aws_iam_role.ecs_tasks_execution_role.arn
 }

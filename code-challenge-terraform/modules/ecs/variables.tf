@@ -7,15 +7,15 @@ variable "subnet_ids" {
 }
 
 variable "load_balancer" {
-  
+
 }
 
 variable "vpc_id" {
-  
+
 }
 
 variable "repositories" {
-  
+
 }
 
 variable "frontend_rule" {

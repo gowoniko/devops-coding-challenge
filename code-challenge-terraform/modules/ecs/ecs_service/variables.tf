@@ -1,17 +1,17 @@
 variable "container_definitions" {
-  
+
 }
 
 variable "service_name" {
-  
+
 }
 
 variable "task_role_arn" {
-  
+
 }
 
 variable "compute_info" {
-  default = [256,512]
+  default = [256, 512]
 }
 
 variable "vpc_id" {
@@ -64,7 +64,7 @@ variable "tg_interval" {
 }
 
 variable "health_check_success_codes" {
-  default = "200" 
+  default = "200"
 }
 
 variable "desired_count" {
@@ -72,22 +72,25 @@ variable "desired_count" {
 }
 
 variable "security_groups" {
-  
+
 }
 
 variable "ecs_cluster" {
-  
+
 }
 
 variable "alb_arn_suffix" {
-  
+
 }
 
 variable "listener_arn" {
-  
+
 }
 
 variable "expose_service" {
   default = true
 }
 
+variable "fqdn" {
+
+}

@@ -55,5 +55,5 @@ variable "ecr_repo" {
       encryption_type          = "AES256"
       attach_repository_policy = true
     }
-}
+  }
 }

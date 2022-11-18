@@ -116,9 +116,8 @@ resource "aws_lb_listener_rule" "account_rule" {
   }
 
   condition {
-    query_string {
-      key   = "service"
-      value = "${var.service_name}"
+    host_header {
+      values = ["${var.fqdn}"]
     }
-}
+  }
 }

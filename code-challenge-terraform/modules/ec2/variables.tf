@@ -1,5 +1,5 @@
 variable "jenkins_subnet_id" {
-  
+
 }
 
 variable "service_cluster" {
@@ -11,11 +11,11 @@ variable "lb_sg_description" {
 }
 
 variable "subnet_ids" {
-  
+
 }
 
 variable "vpc_id" {
-  
+
 }
 
 variable "env" {
