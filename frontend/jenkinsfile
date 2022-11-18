@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    environment {
+        region = "us-east-1"
+        docker_repo_uri = "572634198967.dkr.ecr.us-east-1.amazonaws.com/devops-challenge-frontend"
+        task_def_arn = "arn:aws:iam::572634198967:role/dev-ecs-task-execution-role"
+        account_id = "572634198967"
+        cluster = "ecs-devops-challenge-dev-cluster"
+        exec_role_arn = "arn:aws:iam::572634198967:role/dev-ecs-task-execution-role"
+        container_name = "dev-frontend"
+        service = "dev-frontend"
+    }
+    stages{
+        stage('Checkout external proj and loging to docker repo') {
+            steps {
+                git branch: 'main',
+                credentialsId: 'github',
+                url: 'https://github.com/gowoniko/devops-coding-challenge.git'
+                sh "aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com"
+            }
+        }
+    stage('Build') {
+        steps {
+            // Get SHA1 of current commit
+            script {
+                commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+            }
+            sh "docker build -t ${docker_repo_uri}:${commit_id} ./frontend"
+            sh "docker build -t ${docker_repo_uri}:frontend ./frontend"
+            sh "docker push ${docker_repo_uri}:${commit_id}"
+            sh "docker push ${docker_repo_uri}:frontend"
+            sh "docker rmi -f ${docker_repo_uri}:${commit_id}"
+            sh "sudo su"
+        }
+    }
+    stage('Deploy') {
+     steps{
+        script {
+			sh  'cat /var/lib/jenkins/script.sh | bash'
+                }
+        }
+      } 
+    }
+}
+
